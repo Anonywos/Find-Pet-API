@@ -82,4 +82,14 @@ export class PetsInMemoryRepository implements PetsRepository {
 			total: totalPets,
 		}
 	}
+
+	async deleteById(id: string): Promise<PET | null> {
+		const pet = this.items.find((pet) => pet.id === id)
+		if (!pet) {
+			return null
+		}
+		this.items = this.items.filter((pet) => pet.id !== id)
+
+		return pet ?? null
+	}
 }

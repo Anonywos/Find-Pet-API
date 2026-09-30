@@ -77,4 +77,13 @@ export class petsPrismaRepository implements PetsRepository {
 		}
 	}
 	
+	async deleteById(id: string): Promise<PET | null> {
+		const pet = await prisma.pET.delete({
+			where: {
+				id,
+			},
+		})
+		
+		return pet ?? null
+	}
 }

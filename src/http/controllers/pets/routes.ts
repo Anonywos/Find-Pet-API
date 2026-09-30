@@ -2,6 +2,7 @@ import verifyJWT from '@/http/middlewares/verify-jwt.js'
 import type { FastifyInstance } from 'fastify'
 import { createPetImage } from './create-pet-image.js'
 import { createPet } from './create-pet.js'
+import { deletePet } from './delete-pet.js'
 import { filterPets } from './filter-pets.js'
 import { getPetImageData } from './get-pet-image-data.js'
 import { getPetImages } from './get-pet-images.js'
@@ -12,6 +13,7 @@ export async function petsRoutes(app:FastifyInstance) {
 	app.post('/pets', {onRequest: verifyJWT}, createPet)
 	app.get('/pets', {onRequest: verifyJWT}, filterPets)
 	app.get('/pets/:id', {onRequest: verifyJWT}, getPet)
+	app.delete('/pets/:id', {onRequest: verifyJWT}, deletePet)
 	// Images
 	app.post('/pets/:id/images', {onRequest: verifyJWT}, createPetImage)
 	app.get('/pets/:id/images', {onRequest: verifyJWT}, getPetImages)

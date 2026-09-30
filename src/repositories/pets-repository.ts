@@ -6,4 +6,5 @@ export default interface PetsRepository {
 	create(data: Prisma.PETUncheckedCreateInput): Promise<PET>
 	findById(id: string): Promise<PET | null>
 	filterPets(filters: PetFilters, page: number): Promise<{pets: PET[], total: number}>
+	deleteById(id: string): Promise<PET | null>
 }

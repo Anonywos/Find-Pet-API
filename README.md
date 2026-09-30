@@ -10,8 +10,8 @@
 - [X] should be able to get the total number of filtered pets
 - [X] should be able to get a pet details
 - [X] should be able to get a pet images metadatas
-- [] should be able to get a pet images data
-- [] should be able to delet a pet
+- [X] should be able to get a pet images data
+- [X] should be able to delet a pet
 
 ## Business Rules
 
@@ -26,7 +26,7 @@
 - [X] the org's password must be encrypted
 - [X] the aplication's data must be stored in a PostgreSQL database
 - [X] every data list must be paginated with 20 items per page
-- [] the org must be identified by a JWT (JSON Web Token)
+- [X] the org must be identified by a JWT (JSON Web Token)
 - [X] the password must contain uppercase and lowercase letters, a special character, and more than six characters.
 - [X] the pet's images can not be bigger than 10 Mb
 - [X] the pet's images must be PNG or JPEG

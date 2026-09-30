@@ -4,7 +4,7 @@ import request from 'supertest'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { getAuthorizatedORGCookies } from '../helpers/getAuthorizatedORGCookies.js'
 
-describe('e2e - Get Pet Image Data', () => {
+describe('e2e - Delete Pet', () => {
 	beforeAll(async () => {
 		await app.ready()
 	})
@@ -13,7 +13,7 @@ describe('e2e - Get Pet Image Data', () => {
 		await app.close()
 	})
 
-	it('should be able to get pet image data by ID', async () => {
+	it('should be able to delete a pet by id', async () => {
 		const cookies = await getAuthorizatedORGCookies(app)
 
 		const org = await prisma.oRG.findFirstOrThrow()
@@ -32,35 +32,21 @@ describe('e2e - Get Pet Image Data', () => {
 			},
 		})
 
-		const data = new Uint8Array([0, 0, 0, 0, 0, 0, 0, 0])
-
-		const { id: imageId } = await prisma.pET_IMAGE.create({
-			data:
-				{
-					file_name: 'img 1',
-					mime_type: 'image/jpeg',
-					data: data,
-					petId: pet.id,
-				},
-		})
-
 		const response = await request(app.server)
-			.get(`/pets/images/${imageId}`)
+			.delete(`/pets/${pet.id}`)
 			.set('Cookie', cookies)
 			.send()
 
-		expect(response.statusCode).toEqual(200)
-		expect(response.headers['content-type']).toContain(
-			'image/jpeg',
-		)
-		expect(Array.from(response.body)).toEqual(Array.from(data))
+		expect(response.statusCode).toEqual(204)
 	})
 
-	it('should not be able to get pet images without pet ID', async () => {
+	it('should be able to delete a pet without id', async () => {
 		const cookies = await getAuthorizatedORGCookies(app)
 
+		await prisma.oRG.findFirstOrThrow()
+
 		const response = await request(app.server)
-			.get('/pets/images/123456')
+			.get('/pets/1111')
 			.set('Cookie', cookies)
 			.send()
 
