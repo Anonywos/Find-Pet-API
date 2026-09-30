@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model ORG {
+  id            String   @id @default(uuid())
+  name          String
+  owner         String?
+  email         String   @unique
+  city          String
+  zip_code      String
+  address       String
+  phone         String
+  password_hash String
+  created_at    DateTime @default(now())
+
+  pets PET[]
+
+  @@map("orgs")
+}
+
+enum Age {
+  PUPPY
+  JUNIOR
+  ADULT
+  SENIOR
+}
+
+enum Size {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+enum Energy {
+  VERY_LOW
+  LOW
+  MEDIUM
+  HIGH
+  VERY_HIGH
+}
+
+enum Independence {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum Environment {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+model PET {
+  id           String       @id @default(uuid())
+  name         String
+  description  String?
+  age          Age
+  energy       Energy
+  size         Size
+  independence Independence
+  environment  Environment
+  requirements String[]
+  created_at   DateTime     @default(now())
+
+  org   ORG    @relation(fields: [orgId], references: [id])
+  orgId String
+
+  images PET_IMAGE[]
+
+  @@map("pets")
+}
+
+model PET_IMAGE {
+  id         String   @id @default(uuid())
+  file_name  String
+  mime_type  String
+  data       Bytes
+  created_at DateTime @default(now())
+
+  pet   PET    @relation(fields: [petId], references: [id])
+  petId String
+
+  @@map("pet_images")
+}

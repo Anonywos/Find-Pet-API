@@ -1,0 +1,16 @@
+services:
+  find-a-friend-api-pg:
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRESQL_USERNAME=docker
+      - POSTGRESQL_PASSWORD=docker
+      - POSTGRESQL_DATABASE=findAFriendApi
+    volumes:
+      - find-a-friend-api-pg-data:/bitnami/postgresql
+
+volumes:
+  find-a-friend-api-pg-data:
